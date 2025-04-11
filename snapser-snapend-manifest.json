@@ -1,0 +1,318 @@
+{
+  "version": "v1",
+  "id": "mm3mebua",
+  "name": "my-dev-cluster",
+  "environment": "DEVELOPMENT",
+  "service_definitions": [
+    {
+      "id": "auth",
+      "language": "go",
+      "version": "v0.47.0",
+      "author_id": "snapser",
+      "category": "SNAPSER",
+      "subcategory": "SERVICE",
+      "data_dependencies": [
+        {
+          "type": "POSTGRES",
+          "postgres": {
+            "database": "auth"
+          }
+        },
+        {
+          "type": "POSTGRES",
+          "postgres": {
+            "database": "auth_settings"
+          }
+        },
+        {
+          "type": "REDIS",
+          "redis": {}
+        }
+      ]
+    },
+    {
+      "id": "matchmaking",
+      "language": "go",
+      "version": "v0.47.0",
+      "author_id": "snapser",
+      "category": "SNAPSER",
+      "subcategory": "SERVICE",
+      "data_dependencies": [
+        {
+          "type": "POSTGRES",
+          "postgres": {
+            "database": "matchmaking_settings"
+          }
+        },
+        {
+          "type": "REDIS",
+          "redis": {}
+        }
+      ]
+    },
+    {
+      "id": "relay",
+      "language": "go",
+      "version": "v0.46.0",
+      "author_id": "snapser",
+      "category": "SNAPSER",
+      "subcategory": "SERVICE"
+    }
+  ],
+  "feature_definitions": [
+    "WEB_SOCKETS"
+  ],
+  "settings": [
+    {
+      "id": "auth",
+      "data": {
+        "dev": {
+          "anon": {
+            "enabled": true
+          },
+          "api_keys": [],
+          "app_auth": {
+            "enabled": false
+          },
+          "app_verify": {
+            "client_secret": "",
+            "enabled": false
+          },
+          "apple": {
+            "enabled": false,
+            "key_id": "",
+            "private_key": "",
+            "service_id": "",
+            "team_id": ""
+          },
+          "email": {
+            "enabled": false,
+            "otp_length": 0,
+            "otp_rate_limit_settings": {
+              "allow_list": [],
+              "deny_list": [],
+              "duration_in_seconds": 60,
+              "limit": 5,
+              "lockout_duration_in_seconds": 60
+            },
+            "otp_validity": 0
+          },
+          "epic": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "facebook": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "google": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "password": {
+            "enabled": false
+          },
+          "session_inactivity_timeout": 604800,
+          "session_token_validity": 2592000,
+          "steam": {
+            "api_key": "",
+            "app_id": 0,
+            "enabled": false,
+            "publisher_api_key": "",
+            "web_api_key": ""
+          },
+          "user_auth_restrictions": [],
+          "xbox": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          }
+        },
+        "prod": {
+          "anon": {
+            "enabled": false
+          },
+          "api_keys": [],
+          "app_auth": {
+            "enabled": false
+          },
+          "app_verify": {
+            "client_secret": "",
+            "enabled": false
+          },
+          "apple": {
+            "enabled": false,
+            "key_id": "",
+            "private_key": "",
+            "service_id": "",
+            "team_id": ""
+          },
+          "email": {
+            "enabled": false,
+            "otp_length": 0,
+            "otp_rate_limit_settings": {
+              "allow_list": [],
+              "deny_list": [],
+              "duration_in_seconds": 60,
+              "limit": 5,
+              "lockout_duration_in_seconds": 60
+            },
+            "otp_validity": 0
+          },
+          "epic": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "facebook": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "google": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "password": {
+            "enabled": false
+          },
+          "session_inactivity_timeout": 604800,
+          "session_token_validity": 2592000,
+          "steam": {
+            "api_key": "",
+            "app_id": 0,
+            "enabled": false,
+            "publisher_api_key": "",
+            "web_api_key": ""
+          },
+          "user_auth_restrictions": [],
+          "xbox": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          }
+        },
+        "stage": {
+          "anon": {
+            "enabled": false
+          },
+          "api_keys": [],
+          "app_auth": {
+            "enabled": false
+          },
+          "app_verify": {
+            "client_secret": "",
+            "enabled": false
+          },
+          "apple": {
+            "enabled": false,
+            "key_id": "",
+            "private_key": "",
+            "service_id": "",
+            "team_id": ""
+          },
+          "email": {
+            "enabled": false,
+            "otp_length": 0,
+            "otp_rate_limit_settings": {
+              "allow_list": [],
+              "deny_list": [],
+              "duration_in_seconds": 60,
+              "limit": 5,
+              "lockout_duration_in_seconds": 60
+            },
+            "otp_validity": 0
+          },
+          "epic": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "facebook": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "google": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          },
+          "password": {
+            "enabled": false
+          },
+          "session_inactivity_timeout": 604800,
+          "session_token_validity": 2592000,
+          "steam": {
+            "api_key": "",
+            "app_id": 0,
+            "enabled": false,
+            "publisher_api_key": "",
+            "web_api_key": ""
+          },
+          "user_auth_restrictions": [],
+          "xbox": {
+            "client_id": "",
+            "client_secret": "",
+            "enabled": false
+          }
+        }
+      },
+      "version": "v0.47.0",
+      "exported_at": "1744355699"
+    },
+    {
+      "id": "matchmaking",
+      "data": {
+        "match_profiles": [
+          {
+            "assignment_settings": {
+              "fleet_name": "",
+              "geo": [],
+              "id": "relay",
+              "lobby_start_after_seconds": 0,
+              "metadata": {},
+              "type": "relay"
+            },
+            "backfill_settings": {
+              "enabled": false,
+              "timeout_seconds": "0"
+            },
+            "delay_partial_match_seconds": 0,
+            "description": "Unity RT Demo Profile",
+            "host_selection_settings": {
+              "enabled": false,
+              "key": "",
+              "operator": "min"
+            },
+            "id": "938de92b-e3a7-4119-9817-ecfe4ce8e42d",
+            "is_active": true,
+            "match_acceptance_settings": {
+              "enabled": false,
+              "timeout_seconds": "0"
+            },
+            "max_players": 4,
+            "metadata": {},
+            "min_players": 2,
+            "name": "my_profile",
+            "pools": [],
+            "require_match_acceptance": false,
+            "team_formation_settings": {
+              "allow_party_separation": false,
+              "enabled": false,
+              "min_players_per_team": 0,
+              "num_teams": 0
+            }
+          }
+        ]
+      },
+      "version": "v0.47.0",
+      "exported_at": "1744355699"
+    }
+  ],
+  "applied_configuration": "{\"version\":\"v1\", \"id\":\"mm3mebua\", \"name\":\"my-dev-cluster\", \"environment\":\"DEVELOPMENT\", \"service_definitions\":[{\"id\":\"auth\", \"language\":\"go\", \"version\":\"v0.47.0\", \"author_id\":\"snapser\", \"category\":\"SNAPSER\", \"subcategory\":\"SERVICE\", \"data_dependencies\":[{\"type\":\"POSTGRES\", \"postgres\":{\"database\":\"auth\"}}, {\"type\":\"POSTGRES\", \"postgres\":{\"database\":\"auth_settings\"}}, {\"type\":\"REDIS\", \"redis\":{}}]}, {\"id\":\"matchmaking\", \"language\":\"go\", \"version\":\"v0.47.0\", \"author_id\":\"snapser\", \"category\":\"SNAPSER\", \"subcategory\":\"SERVICE\", \"data_dependencies\":[{\"type\":\"POSTGRES\", \"postgres\":{\"database\":\"matchmaking_settings\"}}, {\"type\":\"REDIS\", \"redis\":{}}]}, {\"id\":\"relay\", \"language\":\"go\", \"version\":\"v0.46.0\", \"author_id\":\"snapser\", \"category\":\"SNAPSER\", \"subcategory\":\"SERVICE\"}], \"feature_definitions\":[\"WEB_SOCKETS\"], \"settings\":[{\"id\":\"auth\", \"data\":{\"dev\":{\"anon\":{\"enabled\":true}, \"api_keys\":[], \"app_auth\":{\"enabled\":false}, \"app_verify\":{\"client_secret\":\"\", \"enabled\":false}, \"apple\":{\"enabled\":false, \"key_id\":\"\", \"private_key\":\"\", \"service_id\":\"\", \"team_id\":\"\"}, \"email\":{\"enabled\":false, \"otp_length\":0, \"otp_rate_limit_settings\":{\"allow_list\":[], \"deny_list\":[], \"duration_in_seconds\":60, \"limit\":5, \"lockout_duration_in_seconds\":60}, \"otp_validity\":0}, \"epic\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"facebook\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"google\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"password\":{\"enabled\":false}, \"session_inactivity_timeout\":604800, \"session_token_validity\":2592000, \"steam\":{\"api_key\":\"\", \"app_id\":0, \"enabled\":false, \"publisher_api_key\":\"\", \"web_api_key\":\"\"}, \"user_auth_restrictions\":[], \"xbox\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}}, \"prod\":{\"anon\":{\"enabled\":false}, \"api_keys\":[], \"app_auth\":{\"enabled\":false}, \"app_verify\":{\"client_secret\":\"\", \"enabled\":false}, \"apple\":{\"enabled\":false, \"key_id\":\"\", \"private_key\":\"\", \"service_id\":\"\", \"team_id\":\"\"}, \"email\":{\"enabled\":false, \"otp_length\":0, \"otp_rate_limit_settings\":{\"allow_list\":[], \"deny_list\":[], \"duration_in_seconds\":60, \"limit\":5, \"lockout_duration_in_seconds\":60}, \"otp_validity\":0}, \"epic\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"facebook\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"google\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"password\":{\"enabled\":false}, \"session_inactivity_timeout\":604800, \"session_token_validity\":2592000, \"steam\":{\"api_key\":\"\", \"app_id\":0, \"enabled\":false, \"publisher_api_key\":\"\", \"web_api_key\":\"\"}, \"user_auth_restrictions\":[], \"xbox\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}}, \"stage\":{\"anon\":{\"enabled\":false}, \"api_keys\":[], \"app_auth\":{\"enabled\":false}, \"app_verify\":{\"client_secret\":\"\", \"enabled\":false}, \"apple\":{\"enabled\":false, \"key_id\":\"\", \"private_key\":\"\", \"service_id\":\"\", \"team_id\":\"\"}, \"email\":{\"enabled\":false, \"otp_length\":0, \"otp_rate_limit_settings\":{\"allow_list\":[], \"deny_list\":[], \"duration_in_seconds\":60, \"limit\":5, \"lockout_duration_in_seconds\":60}, \"otp_validity\":0}, \"epic\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"facebook\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"google\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}, \"password\":{\"enabled\":false}, \"session_inactivity_timeout\":604800, \"session_token_validity\":2592000, \"steam\":{\"api_key\":\"\", \"app_id\":0, \"enabled\":false, \"publisher_api_key\":\"\", \"web_api_key\":\"\"}, \"user_auth_restrictions\":[], \"xbox\":{\"client_id\":\"\", \"client_secret\":\"\", \"enabled\":false}}}, \"version\":\"v0.47.0\", \"exported_at\":\"1744355699\"}, {\"id\":\"matchmaking\", \"data\":{\"match_profiles\":[{\"assignment_settings\":{\"fleet_name\":\"\", \"geo\":[], \"id\":\"relay\", \"lobby_start_after_seconds\":0, \"metadata\":{}, \"type\":\"relay\"}, \"backfill_settings\":{\"enabled\":false, \"timeout_seconds\":\"0\"}, \"delay_partial_match_seconds\":0, \"description\":\"Unity RT Demo Profile\", \"host_selection_settings\":{\"enabled\":false, \"key\":\"\", \"operator\":\"min\"}, \"id\":\"938de92b-e3a7-4119-9817-ecfe4ce8e42d\", \"is_active\":true, \"match_acceptance_settings\":{\"enabled\":false, \"timeout_seconds\":\"0\"}, \"max_players\":4, \"metadata\":{}, \"min_players\":2, \"name\":\"my_profile\", \"pools\":[], \"require_match_acceptance\":false, \"team_formation_settings\":{\"allow_party_separation\":false, \"enabled\":false, \"min_players_per_team\":0, \"num_teams\":0}}]}, \"version\":\"v0.47.0\", \"exported_at\":\"1744355699\"}]}"
+}
