@@ -102,7 +102,7 @@ namespace Snapser
             PartiesHandler = new PartiesHandler(userId, username);
             LobbiesHandler = new LobbiesHandler(userId, username);
             GsfHandler = new GameServerFleetsHandler();
-            
+
             hermesWebsocketConnection.OnConnectionClosed += OnConnectionClosed;
             hermesWebsocketConnection.OnConnectionError += () => { Debug.LogError("Connection Err"); };
 
@@ -116,13 +116,13 @@ namespace Snapser
             SnapEventPartyHandler.Instance.OnPartyLeft += PartiesHandler.OnPartyLeft;
             SnapEventPartyHandler.Instance.OnPartyDeleted += PartiesHandler.OnPartyDeleted;
             SnapEventPartyHandler.Instance.OnPlayerMetadataUpdated += PartiesHandler.OnPartyPlayerMetadataUpdated;
-            
+
             SnapEventLobbiesHandler.Instance.OnLobbiesMemberJoined += LobbiesHandler.OnMemberJoined;
             SnapEventLobbiesHandler.Instance.OnLobbiesMemberLeft += LobbiesHandler.OnMemberLeft;
             SnapEventLobbiesHandler.Instance.OnLobbiesLobbyDisbanded += LobbiesHandler.OnLobbyDisbanded;
             SnapEventLobbiesHandler.Instance.OnLobbiesMemberMetadataUpdated += LobbiesHandler.OnMemberMetadataUpdated;
             SnapEventLobbiesHandler.Instance.OnLobbiesMatchStarted += LobbiesHandler.OnLobbyMatchStarted;
-            
+
             SnapEventGsfHandler.Instance.OnGameServerStateUpdated += GsfHandler.OnGameServerStateUpdated;
         }
 
@@ -185,8 +185,8 @@ namespace Snapser
             Debug.Log("Hermes closed");
         }
 
-        
-        
+
+
         public void QueueMatchmaking()
         {
             Debug.Log("Queueing into Matchmaking");
@@ -205,7 +205,7 @@ namespace Snapser
             SnapApiProxyHandler.Instance.SendSnapApiProxyMessage("/matchmaking.MatchmakingService/CreateTicket",
                 createTicketReq.ToByteString(), messageId);
         }
-        
+
         private void OnMatchmakingCreateMatchError(object s, OnMatchmakingMatchCreateErrorArgs ev)
         {
             SnapEventMatchmakingHandler.Instance.OnMatchmakingMatchCreateError -= OnMatchmakingCreateMatchError;
@@ -217,14 +217,14 @@ namespace Snapser
             Debug.Log($"Match found. Accepting: {ev.MatchId} - {ev.TicketId} in 2 seconds ...");
 
             System.Threading.Thread.Sleep(2000);
-            
-            var matchAcceptReq = new AcceptMatchRequest
+
+            var matchAcceptReq = new Matchmaking.AcceptMatchRequest
             {
                 UserId = userId,
                 Accept = true,
                 MatchId = ev.MatchId
             };
-            
+
             SnapApiProxyHandler.Instance.SendSnapApiProxyMessage(
                 "/matchmaking.MatchmakingService/AcceptMatch",
                 matchAcceptReq.ToByteString(),
