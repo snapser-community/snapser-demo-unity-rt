@@ -112,7 +112,7 @@ public class SnapserManager
         if (IsUsingCustomSnapend)
             _authService = new AuthServiceApi(ClusterURL);
 
-        foreach (SnapserService service in (SnapserService[]) Enum.GetValues(typeof(SnapserService)))
+        foreach (SnapserService service in (SnapserService[])Enum.GetValues(typeof(SnapserService)))
         {
             _snapserServicesState.Add(service, true);
         }
@@ -157,7 +157,7 @@ public class SnapserManager
 
     public void ResetSnapserServices()
     {
-        ClusterURL  = SessionToken = UserId = string.Empty;
+        ClusterURL = SessionToken = UserId = string.Empty;
         PlayerPrefs.SetString(GameConstants.CAS, string.Empty);
         _profilesService = null;
         _statisticsService = null;
@@ -190,7 +190,7 @@ public class SnapserManager
         {
             string anonUsername = username.IsEmptyOrNull() ? GameConstants.DefaultPlayerName + DateTime.UtcNow.ToString("yyyyMMddHHmmssffff") : username;
 
-            response = await _authService.AnonLoginAsync(new AuthAnonLoginRequest(true, anonUsername));
+            response = await _authService.AuthAnonLoginAsync(new AuthAnonLoginRequest(true, new AuthLoginMetadata("", "", "", ""), anonUsername));
         }
         catch (Exception e)
         {
@@ -213,7 +213,7 @@ public class SnapserManager
             OnAuthenticationSuccessful?.Invoke();
         }
     }
-    
+
     public void AuthenticationAnonLogin(Action<SnapserServiceResponse> callback = null, string username = null)
     {
         if (ClusterURL.IsEmptyOrNull())
@@ -233,8 +233,8 @@ public class SnapserManager
         try
         {
             string anonUserName = username.IsEmptyOrNull() ? GameConstants.DefaultPlayerName + DateTime.UtcNow.ToString("yyyyMMddHHmmssffff") : username;
-                
-            response = _authService.AnonLogin(new AuthAnonLoginRequest(true, anonUserName));
+
+            response = _authService.AuthAnonLogin(new AuthAnonLoginRequest(true, new AuthLoginMetadata("", "", "", ""), anonUserName));
         }
         catch (Exception e)
         {
@@ -283,7 +283,7 @@ public class SnapserManager
         try
         {
             string jsonObject = JsonConvert.SerializeObject(new { gamertag });
-            response = await _profilesService.UpsertProfileAsync(UserId, SessionToken, new UpsertProfileRequest(new SnapserProfile(gamertag)));
+            response = await _profilesService.ProfilesUpsertProfileAsync(UserId, SessionToken, new UpsertProfileRequest(new SnapserProfile(gamertag)));
         }
         catch (Exception e)
         {
@@ -322,7 +322,7 @@ public class SnapserManager
 
         try
         {
-            response = await _profilesService.GetProfileAsync(uId, SessionToken);
+            response = await _profilesService.ProfilesGetProfileAsync(uId, SessionToken);
         }
         catch (Exception e)
         {
@@ -335,18 +335,18 @@ public class SnapserManager
 
         if (response != null)
         {
-            JObject jObjectProfile = (JObject) response.Profile;
+            JObject jObjectProfile = (JObject)response.Profile;
             SnapserProfile profile = jObjectProfile.ToObject<SnapserProfile>();
             getProfileResponse = new SnapserServiceResponse(true, "Ok", profile);
             callback?.Invoke(getProfileResponse);
-            Debug.Log("Get Profile Call Complete - " + getProfileResponse.Success + " - " + getProfileResponse.ResponseMessage +". GamerTag - " + profile.gamertag);
+            Debug.Log("Get Profile Call Complete - " + getProfileResponse.Success + " - " + getProfileResponse.ResponseMessage + ". GamerTag - " + profile.gamertag);
         }
     }
 
     #endregion
 
     #region Leaderboard
-    
+
     public async void IncrementLeaderboardScoreAsync(string leaderboardName, int score, Action<SnapserServiceResponse> callback = null)
     {
         if (ClusterURL.IsEmptyOrNull())
@@ -365,7 +365,7 @@ public class SnapserManager
         SnapserServiceResponse incrementLeaderboardScoreResponse;
         try
         {
-            response = await _leaderboardsService.IncrementScoreAsync(leaderboardName, UserId, SessionToken, new IncrementScoreRequest(score));
+            response = await _leaderboardsService.LeaderboardsIncrementScoreAsync(leaderboardName, UserId, SessionToken, new IncrementScoreRequest(score));
         }
         catch (Exception e)
         {
@@ -383,7 +383,7 @@ public class SnapserManager
             Debug.Log("Increment Leaderboard Call Complete - " + incrementLeaderboardScoreResponse.Success + " - " + incrementLeaderboardScoreResponse.ResponseMessage);
         }
     }
-    
+
     public async void SetLeaderboardScoreAsync(string leaderboardName, int score, Action<SnapserServiceResponse> callback = null)
     {
         if (ClusterURL.IsEmptyOrNull())
@@ -402,7 +402,7 @@ public class SnapserManager
         SnapserServiceResponse setLeaderboardScoreResponse;
         try
         {
-            response = await _leaderboardsService.SetScoreAsync(leaderboardName, UserId, SessionToken, new SetScoreRequest(score));
+            response = await _leaderboardsService.LeaderboardsSetScoreAsync(leaderboardName, UserId, SessionToken, new SetScoreRequest(score));
         }
         catch (Exception e)
         {
@@ -420,7 +420,7 @@ public class SnapserManager
             Debug.Log("Set Leaderboard Call Complete - " + setLeaderboardScoreResponse.Success + " - " + setLeaderboardScoreResponse.ResponseMessage);
         }
     }
-    
+
     public async void GetLeaderboardAsync(string leaderboardName, string range, long count, Action<SnapserServiceResponse> callback = null)
     {
         if (ClusterURL.IsEmptyOrNull())
@@ -440,7 +440,7 @@ public class SnapserManager
         try
         {
             //string leaderboardName, string range, long count, string token, string userId = default(string), int? offset = default(int?
-            response = await _leaderboardsService.GetScoresAsync(leaderboardName, range, count, SessionToken, UserId);
+            response = await _leaderboardsService.LeaderboardsGetScoresAsync(leaderboardName, range, count, SessionToken, UserId);
         }
         catch (Exception e)
         {
@@ -483,7 +483,7 @@ public class SnapserManager
         try
         {
             string cas = PlayerPrefs.GetString(GameConstants.CAS, null);
-            response = await _storageService.GetBlobAsync(UserId, "protected", key, SessionToken);
+            response = await _storageService.StorageGetBlobAsync(UserId, "protected", key, SessionToken);
         }
         catch (Exception e)
         {
@@ -500,7 +500,7 @@ public class SnapserManager
             PlayerPrefs.SetString(GameConstants.CAS, cas);
             getStorageBlobResponse = new SnapserServiceResponse(true, "Ok", response.Value);
             callback?.Invoke(getStorageBlobResponse);
-            Debug.Log("Get Storage Blob Call Complete - " + getStorageBlobResponse.Success + " - " + getStorageBlobResponse.ResponseMessage +". CAS - " + cas);
+            Debug.Log("Get Storage Blob Call Complete - " + getStorageBlobResponse.Success + " - " + getStorageBlobResponse.ResponseMessage + ". CAS - " + cas);
         }
     }
 
@@ -524,7 +524,7 @@ public class SnapserManager
         try
         {
             string cas = PlayerPrefs.GetString(GameConstants.CAS, null);
-            response = await _storageService.ReplaceBlobAsync(UserId, "protected", key, SessionToken, new ReplaceBlobRequest(cas, cas.IsEmptyOrNull(), 0L, value));
+            response = await _storageService.StorageReplaceBlobAsync(UserId, "protected", key, SessionToken, new ReplaceBlobRequest(cas, cas.IsEmptyOrNull(), 0L, value));
         }
         catch (Exception e)
         {
@@ -541,7 +541,7 @@ public class SnapserManager
             PlayerPrefs.SetString(GameConstants.CAS, cas);
             replaceStorageBlobResponse = new SnapserServiceResponse(true, "Ok", value);
             callback?.Invoke(replaceStorageBlobResponse);
-            Debug.Log("Replace Storage Blob Call Complete - " + replaceStorageBlobResponse.Success + " - " + replaceStorageBlobResponse.ResponseMessage +". CAS - " + cas);
+            Debug.Log("Replace Storage Blob Call Complete - " + replaceStorageBlobResponse.Success + " - " + replaceStorageBlobResponse.ResponseMessage + ". CAS - " + cas);
         }
     }
 
@@ -568,7 +568,7 @@ public class SnapserManager
         SnapserServiceResponse incrementStatResponse;
         try
         {
-            response = await _statisticsService.GetUserStatisticAsync(UserId, key, SessionToken);
+            response = await _statisticsService.StatisticsGetUserStatisticAsync(UserId, key, SessionToken);
         }
         catch (Exception e)
         {
@@ -606,7 +606,7 @@ public class SnapserManager
         SnapserServiceResponse incrementStatResponse;
         try
         {
-            response = await _statisticsService.IncrementUserStatisticAsync(UserId, key, SessionToken, new IncrementUserStatisticRequest(value));
+            response = await _statisticsService.StatisticsIncrementUserStatisticAsync(UserId, key, SessionToken, new IncrementUserStatisticRequest(value));
         }
         catch (Exception e)
         {
