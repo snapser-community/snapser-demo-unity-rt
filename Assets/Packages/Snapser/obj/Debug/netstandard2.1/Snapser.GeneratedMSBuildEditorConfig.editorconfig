@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Snapser
+build_property.ProjectDir = /Users/Ajinkya/Development/SnapserEngine/snapser-community/snapser-demo-unity-rt/Assets/Packages/Snapser/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 
